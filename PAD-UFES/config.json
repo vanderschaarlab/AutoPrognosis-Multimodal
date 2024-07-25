@@ -1,0 +1,115 @@
+{
+  "globals": {
+    "base_experiment_dir": "experiments/",
+    "base_checkpoint_dir": "checkpoints/",
+    "index_column": "img_id",
+    "target_column": "diagnostic",
+    "class_to_idx": {"ACK": 0, "BCC": 1, "MEL": 2, "NEV": 3, "SCC": 4, "SEK": 5},
+    "feature_columns": [
+      "age",
+      "region_ARM",
+      "region_NECK",
+      "region_FACE",
+      "region_HAND",
+      "region_FOREARM",
+      "region_CHEST",
+      "region_NOSE",
+      "region_THIGH",
+      "region_SCALP",
+      "region_EAR",
+      "region_BACK",
+      "region_FOOT",
+      "region_ABDOMEN",
+      "region_LIP",
+      "itch_False",
+      "itch_True",
+      "grew_False",
+      "grew_True",
+      "hurt_False",
+      "hurt_True",
+      "changed_False",
+      "changed_True",
+      "bleed_False",
+      "bleed_True",
+      "elevation_False",
+      "elevation_True"
+    ],
+    "augmentation": true,
+    "fine_tune_lr": 0.0001,
+    "n_folds": 5,
+    "gradient_clip_val": 1.0,
+    "lr": 1e-6,
+    "max_epochs": 1000,
+    "min_epochs": 70,
+    "monitor_metric": "val_loss",
+    "monitor_mode": "min",
+    "num_workers": 12,
+    "patience": 20,
+    "seed": 42,
+    "warm_up_epochs": 50,
+    "weighted_loss": true
+  },
+  "configurations": [
+    {
+      "type": "early_fusion",
+      "batch_size": 32,
+      "model": "Classifier",
+      "imaging": {
+        "batch_size": 32,
+        "model": "EfficientNetB4",
+        "type": "imaging"
+      }
+    },
+    {
+      "batch_size": 32,
+      "model": "EfficientNetB4",
+      "type": "imaging"
+    },
+    {
+      "batch_size": 64,
+      "model": "DinoV2Base",
+      "type": "imaging"
+    },
+    {
+      "batch_size": 32,
+      "model": "EfficientNetB4",
+      "type": "joint_fusion"
+    },
+    {
+      "type": "tabular",
+      "classifier": {
+        "feature_scaling": ["nop"],
+        "feature_selection": ["nop"],
+        "classifiers": ["xgboost"],
+        "n_folds_cv": 4,
+        "timeout": 120,
+        "num_study_iter": 1,
+        "metric": "aucroc",
+        "sample_for_search": true,
+        "score_threshold": 0.4
+      }
+    },
+    {
+      "type": "late_fusion",
+      "imaging": {
+        "batch_size": 32,
+        "model": "EfficientNetB4",
+        "type": "imaging"
+      },
+      "tabular": {
+        "type": "tabular",
+        "classifier": {
+          "feature_scaling": ["nop"],
+          "feature_selection": ["nop"],
+          "classifiers": ["xgboost"],
+          "n_folds_cv": 4,
+          "timeout": 120,
+          "num_study_iter": 1,
+          "metric": "aucroc",
+          "sample_for_search": true,
+          "score_threshold": 0.4
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+autoprognosis==0.1.21
+numpy==1.24.4
+pandas==2.0.3
+pillow==10.4.0
+pytorch-lightning==2.3.3
+torch==2.3.1
+transformers==4.35.2
+captum==0.7.0
+git+https://github.com/u7122029/imgaug.git@numpy-types-fix
