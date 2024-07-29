@@ -122,8 +122,15 @@ Example usage of key functionality can be found in the following tutorials:
 If you use this code or found it useful, please consider citing the associated paper:
 
 ```
+@article{imrie2024automated,
+    title={Automated Ensemble Multimodal Machine Learning for Healthcare},
+    author={Imrie, Fergus and Denner, Stefan and Brunschwig, Lucas S and Maier-Hein, Klaus and van der Schaar, Mihaela},
+    journal={arXiv preprint arXiv:2407.18227},
+    url={https://arxiv.org/abs/2407.18227},
+    year={2024}
+} 
 ```
 
 ## References
-1. [Automated Ensemble Multimodal Machine Learning for Healthcare]()
+1. [Automated Ensemble Multimodal Machine Learning for Healthcare](https://arxiv.org/abs/2407.18227)
 2. [AutoPrognosis 2.0: Democratizing Diagnostic and Prognostic Modeling in Healthcare with Automated Machine Learning](https://journals.plos.org/digitalhealth/article?id=10.1371/journal.pdig.0000276)
