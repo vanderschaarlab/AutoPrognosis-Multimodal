@@ -145,7 +145,7 @@ class AutoprognosisM:
 
         return weights
 
-    def predict(self, df: pd.DataFrame, weights: np.ndarray) -> pd.DataFrame:
+    def predict(self, df: pd.DataFrame, weights: np.ndarray, return_probs=False) -> pd.DataFrame:
         ensemble_prob_dfs = []
         class_names = None  # To store class names
         index = None  # To store the index of the DataFrame
@@ -191,6 +191,11 @@ class AutoprognosisM:
         # Final ensemble predictions: average the probabilities
         ensemble_avg_probs = np.average(ensemble_prob_array, weights=weights, axis=0)
 
+        # Create a DataFrame for the final probabilities with the same index
+        ensemble_probs_df = pd.DataFrame(
+            ensemble_avg_probs, index=index, columns=[class_names]
+        )
+
         # Take the argmax and assign the class labels from the columns
         ensemble_predictions = class_names[ensemble_avg_probs.argmax(axis=1)]
 
@@ -198,4 +203,7 @@ class AutoprognosisM:
         ensemble_predictions_df = pd.DataFrame(
             ensemble_predictions, index=index, columns=["predictions"]
         )
-        return ensemble_predictions_df
+        if return_probs:
+            return ensemble_probs_df
+        else:
+            return ensemble_predictions_df

@@ -2,6 +2,10 @@
 
 <div align="center">
 
+[![Test In Colab](https://img.shields.io/badge/Tutorial-Model%20Search-orange)](https://colab.research.google.com/github/vanderschaarlab/AutoPrognosis-Multimodal/blob/master/examples/autoprognosis-m.ipynb)
+
+[![arXiv](https://img.shields.io/badge/arXiv-2407.18227-b31b1b.svg)](https://arxiv.org/abs/2407.18227)
+
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://github.com/fimrie/AP2_multimodal_priv/blob/main/LICENSE)
 [![about](https://img.shields.io/badge/about-The%20van%20der%20Schaar%20Lab-blue)](https://www.vanderschaar-lab.com/)
 
@@ -24,7 +28,7 @@ AutoPrognosis-M relies on several core dependencies. These can be installed as f
 
 #### Using pip
 
-Install all required dependencies using pip:
+Install required dependencies using pip:
 ```bash
 $ pip install -r requirements.txt
 ```

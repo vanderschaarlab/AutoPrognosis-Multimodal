@@ -35,14 +35,13 @@ def tabular_training(config: SimpleNamespace, train_df: pd.DataFrame, force=Fals
     tabular_study.run()
 
     tabular_model = load_model_from_file(workspace / study_name_tabular / "model.p")
-    train_X_tabular = tabular_train_dataframe[
-        config.feature_columns + [config.target_column]
-    ]
+    train_X_tabular = tabular_train_dataframe[config.feature_columns]
+    
     # Since there is no direct way to get the int->string label mapping, we provide the labels as integers
-    classes = sorted(train_X_tabular[config.target_column].unique())
+    classes = sorted(tabular_train_dataframe[config.target_column].unique())
     class_to_idx = {_cls: idx for idx, _cls in enumerate(classes)}
     # apply the mapping
-    train_X_tabular[config.target_column] = train_X_tabular[config.target_column].map(
+    tabular_train_dataframe[config.target_column] = tabular_train_dataframe[config.target_column].map(
         class_to_idx
     )
     tabular_model.fit(train_X_tabular, tabular_train_dataframe[config.target_column])
@@ -69,7 +68,7 @@ def tabular_predict_prob(config: SimpleNamespace, df: pd.DataFrame) -> pd.DataFr
         class_to_idx
     )
 
-    val_prob_df = tabular_model.predict_proba(val_dataframe)
+    val_prob_df = tabular_model.predict_proba(val_dataframe[config.feature_columns])
     # assign the class names back
     val_prob_df.columns = classes
     # set the index to the original index
